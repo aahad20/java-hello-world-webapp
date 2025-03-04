@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-repo.git'
+                git 'https://github.com/aahad20/java-hello-world-webapp.git'
             }
         }
 

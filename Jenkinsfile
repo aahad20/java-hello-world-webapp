@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         TOMCAT_HOME = '/opt/tomcat'
-        TOMCAT_USER = 'ec2-user'
+        TOMCAT_USER = 'admin'
+        TOMCAT_PASSWORD= 'Admin@123'
         TOMCAT_PORT = '8080'
         EC2_IP = '3.14.128.92'
         GIT_REPO = 'https://github.com/aahad20/java-hello-world-webapp.git'

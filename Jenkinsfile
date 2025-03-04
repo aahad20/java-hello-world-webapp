@@ -6,10 +6,11 @@ pipeline {
         TOMCAT_PASS = 'Admin@123'    // Tomcat Password
         TOMCAT_URL = 'http://3.14.128.92:8080'  // Tomcat running on same EC2
         APP_NAME = 'login'  // Replace with your WAR app name
-    }
-    tools {
+        tools {
         maven 'm39'  // Name of Maven tool as configured in Jenkins
     }
+    }
+    
     stages {
         stage('Checkout Code') {
             steps {

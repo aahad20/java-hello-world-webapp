@@ -2,36 +2,28 @@ pipeline {
     agent any
 
     environment {
-        TOMCAT_HOME = '/opt/tomcat'
-        TOMCAT_USER = 'admin'
-        TOMCAT_PASSWORD= 'Admin@123'
-        TOMCAT_PORT = '8080'
-        EC2_IP = '3.14.128.92'
-        GIT_REPO = 'https://github.com/aahad20/java-hello-world-webapp.git'
+        TOMCAT_URL = 'http://3.14.128.92:8080'
+        TOMCAT_APP = 'login'  // Name of your WAR file
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'master', url: "$GIT_REPO"
+                git 'https://github.com/your-repo.git'
             }
         }
-        
-        stage('Build Java App') {
+
+        stage('Build Application') {
             steps {
-                script {
-                    // Maven build command (or Gradle depending on your setup)
-                    sh 'mvn clean install'
-                }
+                sh 'mvn clean package'
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
-                script {
+                withCredentials([usernamePassword(credentialsId: 'tomcat-credentials', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASS')]) {
                     sh """
-                    scp target/your-java-app.war $TOMCAT_USER@$EC2_IP:$TOMCAT_HOME/webapps/
-                    ssh $TOMCAT_USER@$EC2_IP "sudo systemctl restart tomcat"
+                    curl -u $TOMCAT_USER:$TOMCAT_PASS -T target/${TOMCAT_APP}.war $TOMCAT_URL/manager/text/deploy?path=/${TOMCAT_APP}&update=true
                     """
                 }
             }

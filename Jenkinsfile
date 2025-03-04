@@ -20,12 +20,14 @@ tools {
 
         stage('Build with Maven') {
             steps {
-                def mvnHome = tool name: 'm39', type: 'maven'
+
+                 script {
+                     def mvnHome = tool name: 'm39', type: 'maven'
                                     sh "${mvnHome}/bin/mvn clean package"
 
             }
         }
-
+        }
         stage('Deploy to Tomcat') {
             steps {
                 sh """

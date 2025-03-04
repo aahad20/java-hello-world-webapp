@@ -9,7 +9,7 @@ pipeline {
     }
     tools {
         maven 'm39'  // Name of Maven tool as configured in Jenkins
-
+    }
     stages {
         stage('Checkout Code') {
             steps {
@@ -33,3 +33,5 @@ pipeline {
             }
         }
     }
+
+}
